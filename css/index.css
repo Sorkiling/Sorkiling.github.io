@@ -1,0 +1,26 @@
+#bigBangButton{
+	width: 240px;
+	height: 125px;
+	font-size: 50px;
+	border-radius: 12px;
+	border: 2px solid;
+}
+
+#bigBangButton:hover{
+	 background-color:grey;
+}
+
+#planckAmount {
+	font-weight: bold;
+	font-size: 25px;
+}
+
+#startScreen{
+	margin: 100px 10px 10px 10px;
+	text-align:center;
+}
+
+#mainScreen{
+	margin: 20px;
+	text-align:center;
+}
