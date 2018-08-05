@@ -14,13 +14,6 @@ body {
 	 background-color:grey;
 }
 
-#planckAmount,
-#planckProduction {
-	display: inline;
-	font-weight: bold;
-	font-size: 25px;
-}
-
 #startScreen{
 	margin: 100px 10px 10px 10px;
 	text-align:center;
@@ -29,4 +22,14 @@ body {
 #mainScreen{
 	margin: 20px;
 	text-align:center;
+}
+
+.inline {
+	display: inline;
+	font-weight: bold;
+	font-size: 25px;
+}
+
+.upgradeButton{
+	width: 60%;
 }
