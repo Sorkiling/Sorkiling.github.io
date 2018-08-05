@@ -1,3 +1,7 @@
+body {
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
 #bigBangButton{
 	width: 240px;
 	height: 125px;
@@ -10,7 +14,9 @@
 	 background-color:grey;
 }
 
-#planckAmount {
+#planckAmount,
+#planckProduction {
+	display: inline;
 	font-weight: bold;
 	font-size: 25px;
 }
