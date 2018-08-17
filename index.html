@@ -13,35 +13,42 @@
 	</div>
 	<div id="mainScreen">
 		<div>
-			<p id="planckAmount" class="inline">0 </p>
+			<p id="planckAmount" class="inline"></p>
 			<span>Planck time units</span>
 		</div>
 		<div>
 			<span>has passed since the beginning of this universe</span>
 		</div>
 		<div>
-			<p id="planckProduction" class="inline">1 </p>
+			<p id="planckProduction" class="inline">0 </p>
 			<span id="singularOrPluralSpan">Planck time units are filtering to your universe each second!</span>
 		</div>
-		<hr>
-		<div class="upgradeButton">
-			<table style="width:100%">
+		<hr>	
+		<div class="upgradeTable">
+			<table class="width100">
 				<tr>
-					<th><button id="increaseHole1" type="button">Make hole bigger</button></th>
+					<th><p> </p></th>
+					<th><p> </p></th>
+					<th><p>Cost: </p></th>
+					<th><p>Amount: </p></th>
+					<th><p>Production: </p></th>
+				</tr>
+				<tr>
+					<th><button class="upgradeButton" id="increaseHole1" type="button">Make hole bigger</button></th>
+					<th><span>Increase hole size</span></th>
+					<th><p id="smallHoleCost"></p></th>
+					<th><p id="smallHoleAmount"></p></th>
+					<th><p id="smallHoleProduction"></p></th>
+				</tr>
+				<tr class="disabled">
+					<th><button id="" type="button">Make hole bigger</button></th>
 					<th><span>Increase hole size</span></th>
 					<th><p>0 </p></th>
 					<th><p>0 </p></th>
 					<th><p>0 </p></th>
 				</tr>
-				<tr>
-					<th><button id="increaseHole1" type="button">Make hole bigger</button></th>
-					<th><span>Increase hole size</span></th>
-					<th><p>0 </p></th>
-					<th><p>0 </p></th>
-					<th><p>0 </p></th>
-				</tr>
-				<tr>
-					<th><button id="increaseHole1" type="button">Make hole bigger</button></th>
+				<tr class="disabled">
+					<th><button id="" type="button">Make hole bigger</button></th>
 					<th><span>Increase hole size</span></th>
 					<th><p>0 </p></th>
 					<th><p>0 </p></th>
