@@ -1,7 +1,10 @@
 body {
     font-family: "Lucida Console", Monaco, monospace;
 }
-
+th {
+	font-family: "Lucida Console", Monaco, monospace;
+    font-weight: normal;
+}
 #bigBangButton{
 	width: 240px;
 	height: 125px;
@@ -9,27 +12,37 @@ body {
 	border-radius: 12px;
 	border: 2px solid;
 }
-
 #bigBangButton:hover{
-	 background-color:grey;
+	 background-color: grey;
 }
-
+.upgradeButton{
+	background-color: #80ff80;
+	border-radius: 12px;
+	border: 2px solid;
+}
+.upgradeButton:hover{
+	 background-color: #00f200;
+}
 #startScreen{
 	margin: 100px 10px 10px 10px;
-	text-align:center;
+	text-align: center;
 }
-
 #mainScreen{
 	margin: 20px;
-	text-align:center;
+	text-align: center;
 }
-
+.width100{
+	width: 100%;
+	font-weight: normal;
+}
+.disabled{
+	display: none;
+}
 .inline {
 	display: inline;
 	font-weight: bold;
 	font-size: 25px;
 }
-
-.upgradeButton{
+.upgradeTable{
 	width: 60%;
 }
