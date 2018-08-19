@@ -5,6 +5,14 @@ th {
 	font-family: "Lucida Console", Monaco, monospace;
     font-weight: normal;
 }
+div.floatLeft{
+	float:left;
+}
+#loadingScreen{
+	margin: 15% 10px 10px 10px;
+	text-align: center;
+	font-size: 50px;
+}
 #bigBangButton{
 	width: 240px;
 	height: 125px;
@@ -15,34 +23,63 @@ th {
 #bigBangButton:hover{
 	 background-color: grey;
 }
-.upgradeButton{
-	background-color: #80ff80;
-	border-radius: 12px;
-	border: 2px solid;
-}
-.upgradeButton:hover{
-	 background-color: #00f200;
-}
 #startScreen{
-	margin: 100px 10px 10px 10px;
+	margin: 15% 10px 10px 10px;
 	text-align: center;
 }
 #mainScreen{
 	margin: 20px;
 	text-align: center;
 }
-.width100{
-	width: 100%;
-	font-weight: normal;
+.upgradeButton{
+	background-color: #80ff80;
+	border-radius: 12px;
+	border: 2px solid;
+	width: 75%;
+}
+.upgradeButton:hover{
+	 background-color: #00f200;
+}
+.spanTextbox{
+	padding: 10px;
+}
+.textBox{
+	margin-top: 15px;
+	width: 40%;
+	height: 600px;
+	border-style: groove;
+	overflow-y: scroll;
+}
+.textBox::-webkit-scrollbar {
+    width: 10px;
+}
+.textBox::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+.textBox::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+.textBox::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+.upgradeTable{
+	width: 55%;
+}
+.width20{
+	width: 20%;
 }
 .disabled{
 	display: none;
 }
-.inline {
+.inlineBoldBig {
 	display: inline;
 	font-weight: bold;
 	font-size: 25px;
 }
-.upgradeTable{
-	width: 60%;
+.inlineBoldSmall {
+	display: inline;
+	font-weight: bold;
+}
+.inline{
+	display: inline;
 }
