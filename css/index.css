@@ -17,8 +17,8 @@ div.floatLeft{
 	width: 240px;
 	height: 125px;
 	font-size: 50px;
-	border-radius: 12px;
 	border: 2px solid;
+	border-radius: 12px;
 }
 #bigBangButton:hover{
 	 background-color: grey;
@@ -46,7 +46,7 @@ div.floatLeft{
 .textBox{
 	margin-top: 15px;
 	width: 40%;
-	height: 600px;
+	height: 500px;
 	border-style: groove;
 	overflow-y: scroll;
 }

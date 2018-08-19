@@ -15,6 +15,14 @@ var player = {
 			initialCost: 10,
 			costIncrement: 25,
 	    },
+		mediumHole: {
+			production: new Decimal(0),
+			productionIncrement: 1,
+			amount: 0,
+			cost: new Decimal(10),
+			initialCost: 10,
+			costIncrement: 25,
+	    },
 }
 
 document.getElementById("loadingScreen").style.display = "block";
@@ -36,6 +44,7 @@ if(loadedGame == false){
 		refreshTextbox();
 	}
 	
+	autoSave();
 }
 
 //increase production SmallHole
