@@ -1,5 +1,6 @@
 body {
     font-family: "Lucida Console", Monaco, monospace;
+    font-size: 14px;
 }
 th {
 	font-family: "Lucida Console", Monaco, monospace;
@@ -7,6 +8,9 @@ th {
 }
 div.floatLeft{
 	float:left;
+}
+h1{
+	text-align: center;
 }
 #loadingScreen{
 	margin: 15% 10px 10px 10px;
@@ -26,10 +30,21 @@ div.floatLeft{
 #startScreen{
 	margin: 15% 10px 10px 10px;
 	text-align: center;
+	display: none;
 }
 #mainScreen{
 	margin: 20px;
 	text-align: center;
+	display: none;
+}
+#textBoxTabs{
+	border-bottom: 2px groove;
+}
+.logTextBox li{
+	padding: 10px 10px 0px 0px;
+}
+.resumeDiv{
+	 border-bottom: 2px groove;
 }
 .upgradeButton{
 	background-color: #80ff80;
@@ -40,35 +55,62 @@ div.floatLeft{
 .upgradeButton:hover{
 	 background-color: #00f200;
 }
-.spanTextbox{
+.padding10{
 	padding: 10px;
+}
+.padding4{
+	padding: 4px;
 }
 .textBox{
 	margin-top: 15px;
-	width: 40%;
+	width: 44%;
 	height: 500px;
 	border-style: groove;
-	overflow-y: scroll;
 }
-.textBox::-webkit-scrollbar {
+.textBoxScroll{
+	overflow-y: scroll;
+	height: 91%;
+}
+.textBoxScroll::-webkit-scrollbar {
     width: 10px;
 }
-.textBox::-webkit-scrollbar-track {
+.textBoxScroll::-webkit-scrollbar-track {
     background: #f1f1f1; 
 }
-.textBox::-webkit-scrollbar-thumb {
+.textBoxScroll::-webkit-scrollbar-thumb {
     background: #888; 
 }
-.textBox::-webkit-scrollbar-thumb:hover {
+.textBoxScroll::-webkit-scrollbar-thumb:hover {
     background: #555; 
+}
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+.tab button {
+	width: 25%;
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+.tab button:hover {
+    background-color: #ddd;
+}
+.tab button.active {
+    background-color: #ccc;
 }
 .upgradeTable{
 	width: 55%;
 }
-.width20{
+.widthColumns{
 	width: 20%;
 }
-.disabled{
+.displayNone{
 	display: none;
 }
 .inlineBoldBig {
@@ -79,7 +121,4 @@ div.floatLeft{
 .inlineBoldSmall {
 	display: inline;
 	font-weight: bold;
-}
-.inline{
-	display: inline;
 }

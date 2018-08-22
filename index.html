@@ -1,77 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>The Flow of Time</title>
-<link rel="stylesheet" type="text/css" href="css/notifications.css">
-<link rel="stylesheet" type="text/css" href="css/index.css">
+	<meta charset="UTF-8">
+	<title>The Flow of Time</title>
+	
+	<link rel="stylesheet" type="text/css" href="css/notifications.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 
 <body>
-
-	<div id="loadingScreen">
-		<p>LOADING...</p>
-	</div>
-	<div id="startScreen">
-		<button id="bigBangButton" type="button">Big Bang</button>
-	</div>
-	<div id="mainScreen">
-		<div>
-			<button id="save" type="button">Save game</button>
+	<header>
+		<h1>THE FLOW OF TIME</h1>
+	</header>
+	<section>
+		<div id="loadingScreen">
+			<p>LOADING...</p>
 		</div>
-		<div>
-			<p id="planckAmount" class="inlineBoldBig"></p>
-			<span>Planck time units</span>
+		<div id="startScreen">
+			<button id="bigBangButton" type="button">Big Bang</button>
 		</div>
-		<div>
-			<span>has passed since the beginning of this universe.</span>
-		</div>
-		<div>
-			<p id="planckProduction" class="inlineBoldSmall">0 </p>
-			<span id="singularOrPluralSpan">Planck time units are filtering to your universe each second!</span>
-		</div>
-		<hr>
-		<div>
-			<div class="floatLeft upgradeTable">
-				<table>
-					<tr>
-						<th class="width20"><p> </p></th>
-						<th class="width20"><p> </p></th>
-						<th class="width20"><p>Cost: </p></th>
-						<th class="width20"><p>Upgrades: </p></th>
-						<th class="width20"><p>Production: </p></th>
-					</tr>
-					<tr>
-						<th><button class="upgradeButton" id="increaseHoleSmall" type="button">Small Hole</button></th>
-						<th><span>Increase hole size</span></th>
-						<th><p id="smallHoleCost"></p></th>
-						<th><p id="smallHoleAmount"></p></th>
-						<th><p id="smallHoleProduction"></p></th>
-					</tr>
-					<tr class="disabled">
-						<th><button id="" type="button">Make hole bigger</button></th>
-						<th><span>Increase hole size</span></th>
-						<th><p>0 </p></th>
-						<th><p>0 </p></th>
-						<th><p>0 </p></th>
-					</tr>
-					<tr class="disabled">
-						<th><button id="" type="button">Make hole bigger</button></th>
-						<th><span>Increase hole size</span></th>
-						<th><p>0 </p></th>
-						<th><p>0 </p></th>
-						<th><p>0 </p></th>
-					</tr>
-				</table>
+		<div id="mainScreen">
+			<div class="resumeDiv">
+				<div class="padding4">
+					<button id="save" type="button">Save game</button>
+				</div>
+				<div class="padding4">
+					<button id="hardReset" type="button">Hard reset game</button>
+				</div>
+				<div class="padding4">
+					<p id="planckAmount" class="inlineBoldBig"></p>
+					<span>Planck time units</span>
+				</div>
+				<div class="padding4">
+					<span>has passed since the beginning of this universe.</span>
+				</div>
+				<div class="padding4">
+					<p id="planckProduction" class="inlineBoldSmall">0 </p>
+					<span id="singularOrPluralSpan">Planck time units are filtering to your universe each second!</span>
+				</div>
 			</div>
-			<div id="textBox" class="floatLeft textBox">
-				<br>
-				<br>
-				<span class="spanTextbox">- A new universe was born. There is a small hole in space-time.</span>
-			</div>
-		</div>	
-	</div>
-	
+			<div>
+				<div class="floatLeft upgradeTable">
+					<table>
+						<tr>
+							<th class="widthColumns"><p> </p></th>
+							<th class="widthColumns"><p> </p></th>
+							<th class="widthColumns"><p>Cost: </p></th>
+							<th class="widthColumns"><p>Production/hole: </p></th>
+							<th class="widthColumns"><p>Amount: </p></th>
+						</tr>
+						<tr>
+							<th><button class="upgradeButton" id="increaseHoleSmall" type="button">Small Hole</button></th>
+							<th><span>Increase hole size</span></th>
+							<th><p id="smallHoleCost"></p></th>
+							<th><p id="smallHoleProduction"></p></th>
+							<th><p id="smallHoleAmount"></p></th>
+						</tr>
+						<tr class="displayNone">
+							<th><button id="" type="button">Make hole bigger</button></th>
+							<th><span>Increase hole size</span></th>
+							<th><p>0 </p></th>
+							<th><p>0 </p></th>
+							<th><p>0 </p></th>
+						</tr>
+						<tr class="displayNone">
+							<th><button id="" type="button">Make hole bigger</button></th>
+							<th><span>Increase hole size</span></th>
+							<th><p>0 </p></th>
+							<th><p>0 </p></th>
+							<th><p>0 </p></th>
+						</tr>
+					</table>
+				</div>
+				<div class="floatLeft textBox">
+					<div class="tab">
+						<button id="generalTabButton" onclick="textBoxChangeTab('General')">General</button>
+						<button id="logTabButton" onclick="textBoxChangeTab('Log')">Log</button>
+						<button id="upgradesTabButton" onclick="textBoxChangeTab('Upgrades')">Upgrades</button>
+						<button id="achievementsTabButton" onclick="textBoxChangeTab('Achievements')">Achievements</button>
+					</div>
+					<div class="textBoxScroll">
+						<ul id="textBoxGeneral" class="logTextBox" type="circle"></ul>
+						<ul id="textBoxLog" class="logTextBox displayNone" type="circle"></ul>
+						<ul id="textBoxUpgrades" class="logTextBox displayNone" type="circle"></ul>
+						<ul id="textBoxAchievements" class="logTextBox displayNone" type="circle"></ul>
+					</div>
+				</div>
+			</div>	
+			<footer>
+				<nav>
+					<!-- a href="enlace.html">Enlace</a -->
+				</nav>
+			</footer>
+		</div>
+	</section>
 </body>
 
 <script type="text/javascript" src="js/notifications.js"></script>
