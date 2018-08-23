@@ -6,11 +6,14 @@ th {
 	font-family: "Lucida Console", Monaco, monospace;
     font-weight: normal;
 }
-div.floatLeft{
-	float:left;
-}
 h1{
 	text-align: center;
+}
+table{
+	width: 100%;
+}
+div.floatLeft{
+	float: left;
 }
 #loadingScreen{
 	margin: 15% 10px 10px 10px;
@@ -46,13 +49,22 @@ h1{
 .resumeDiv{
 	 border-bottom: 2px groove;
 }
+.upgradeTextBoxButton{
+	background-color: #ff79bc;
+	border-radius: 12px;
+	border: 2px solid;
+	width: 20%;
+}
+.upgradeTextBoxButton:hover{
+	 background-color: #ff0482;
+}
 .upgradeButton{
 	background-color: #80ff80;
 	border-radius: 12px;
 	border: 2px solid;
 	width: 75%;
 }
-.upgradeButton:hover{
+.upgradeButtonHover:hover{
 	 background-color: #00f200;
 }
 .padding10{
@@ -85,7 +97,6 @@ h1{
 }
 .tab {
     overflow: hidden;
-    border: 1px solid #ccc;
     background-color: #f1f1f1;
 }
 .tab button {

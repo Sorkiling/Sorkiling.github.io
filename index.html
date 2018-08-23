@@ -29,39 +29,39 @@
 				</div>
 				<div class="padding4">
 					<p id="planckAmount" class="inlineBoldBig"></p>
-					<span>Planck time units</span>
+					<span>Planck time units (tP)</span>
 				</div>
 				<div class="padding4">
 					<span>has passed since the beginning of this universe.</span>
 				</div>
 				<div class="padding4">
 					<p id="planckProduction" class="inlineBoldSmall">0 </p>
-					<span id="singularOrPluralSpan">Planck time units are filtering to your universe each second!</span>
+					<span id="singularOrPluralSpan">(tP) are filtering to your universe each second!</span>
 				</div>
 			</div>
 			<div>
 				<div class="floatLeft upgradeTable">
 					<table>
-						<tr>
+						<tr id="mainRows">
 							<th class="widthColumns"><p> </p></th>
 							<th class="widthColumns"><p> </p></th>
 							<th class="widthColumns"><p>Cost: </p></th>
 							<th class="widthColumns"><p>Production/hole: </p></th>
 							<th class="widthColumns"><p>Amount: </p></th>
 						</tr>
-						<tr>
-							<th><button class="upgradeButton" id="increaseHoleSmall" type="button">Small Hole</button></th>
-							<th><span>Increase hole size</span></th>
+						<tr id="smallHoleRow">
+							<th><button class="upgradeButton upgradeButtonHover" id="increaseHoleSmall" type="button">Increase size</button></th>
+							<th><span>Small Hole (sh)</span></th>
 							<th><p id="smallHoleCost"></p></th>
 							<th><p id="smallHoleProduction"></p></th>
 							<th><p id="smallHoleAmount"></p></th>
 						</tr>
-						<tr class="displayNone">
-							<th><button id="" type="button">Make hole bigger</button></th>
-							<th><span>Increase hole size</span></th>
-							<th><p>0 </p></th>
-							<th><p>0 </p></th>
-							<th><p>0 </p></th>
+						<tr id="mediumHoleRow" class="displayNone">
+							<th><button class="upgradeButton upgradeButtonHover" id="increaseHoleMedium" type="button">Increase size</button></th>
+							<th><span>Medium Hole (mh)</span></th>
+							<th><p id="mediumHoleCost"></p></th>
+							<th><p id="mediumHoleProduction"></p></th>
+							<th><p id="mediumHoleAmount"></p></th>
 						</tr>
 						<tr class="displayNone">
 							<th><button id="" type="button">Make hole bigger</button></th>

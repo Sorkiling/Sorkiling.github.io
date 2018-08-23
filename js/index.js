@@ -14,19 +14,31 @@ var player = {
 		smallHole: {
 			production: new Decimal(0),
 			productionIncrement: 1,
+			productionPerHole: new Decimal(0),
 			amount: new Decimal(0),
 			cost: new Decimal(10),
 			initialCost: 10,
-			upgradeCost: 0,
-			costIncrement: 35,
+			upgradesBought: 0,
+			upgraded: false,
+	    },
+	    mediumHole: {
+			production: new Decimal(0),
+			productionIncrement: 0.1,
+			productionPerHole: new Decimal(0),
+			amount: new Decimal(0),
+			cost: new Decimal(1000),
+			initialCost: 1000,
+			upgradesBought: 1,
+			upgraded: false,
 	    },
 }
 
 var defaultStart = player;
 
+//loadGame
 if(loadedGame == false){
 	loadGame();
-	loadedGame == true;
+	loadedGame = true;
 	if(player.gameStarted == false){
 		document.getElementById("startScreen").style.display = "block";
 		document.getElementById("loadingScreen").style.display = "none";
@@ -36,31 +48,126 @@ if(loadedGame == false){
 		
 		loadInitialView();
 		increasePlanckTime();
+		if(player.smallHole.upgraded){
+			increaseHoles();
+		}
 		refreshTextbox();
+		loadTexts();
 	}
 	
 	autoSave();
+}
+
+//Calculates all holes production and total production
+function calculateHolesProduction(){
+	player.smallHole.production = player.smallHole.productionPerHole.mul(player.smallHole.amount);
+	player.mediumHole.production = player.mediumHole.productionPerHole.mul(player.mediumHole.amount);
+	
+	player.totalProduction = player.smallHole.production;
+	
+	loadTexts();
 }
 
 //increase production SmallHole
 document.getElementById("increaseHoleSmall").onclick = function () {
 	if(player.smallHole.cost.lte(player.time)){
 		player.time = (player.time).sub(player.smallHole.cost);
-		player.smallHole.production = player.smallHole.production.add(player.smallHole.productionIncrement);
 		
 		if(player.smallHole.amount.eq(0)){
 			player.smallHole.amount = player.smallHole.amount.add(1);
 		}
 		
-		player.smallHole.upgradeCost = player.smallHole.upgradeCost + 1;
+		player.smallHole.upgradesBought = player.smallHole.upgradesBought + 1;
+		player.smallHole.productionPerHole = player.smallHole.productionPerHole.add(1);
 		
-		calculateTotalProduction();
 		
-		var multiplierCost = Math.floor(player.smallHole.upgradeCost / 10);
-		var finalCost = new Decimal(player.smallHole.initialCost + (player.smallHole.costIncrement * multiplierCost));
-		player.smallHole.cost = finalCost;
+		if(player.smallHole.productionPerHole >= 10 && player.smallHole.productionPerHole < 20){
+			player.smallHole.cost = new Decimal('5e1');
+		}else if(player.smallHole.productionPerHole >= 20 && player.smallHole.productionPerHole < 30){
+			player.smallHole.cost = new Decimal('1.5e2');
+		}else if(player.smallHole.productionPerHole >= 30 && player.smallHole.productionPerHole < 40){
+			player.smallHole.cost = new Decimal('5e2');
+		}else if(player.smallHole.productionPerHole >= 40 && player.smallHole.productionPerHole < 50){
+			player.smallHole.cost = new Decimal('1.5e3');
+		}else if(player.smallHole.productionPerHole >= 50){
+			player.smallHole.cost = new Decimal('5e4');
+		}
 		
-		loadTexts();
+		calculateHolesProduction();
+	}
+}
+
+//increase production mediumHole
+document.getElementById("increaseHoleMedium").onclick = function () {
+	if(player.mediumHole.cost.lte(player.time)){
+		player.time = (player.time).sub(player.mediumHole.cost);
+		
+		player.mediumHole.upgradesBought = player.mediumHole.upgradesBought + 1;
+		player.mediumHole.productionPerHole = player.mediumHole.productionPerHole.add(0.1);
+		
+		if(player.mediumHole.productionPerHole >= 0.5 && player.mediumHole.productionPerHole < 1){
+			player.mediumHole.cost = new Decimal('1e4');
+		}else if(player.mediumHole.productionPerHole >= 1 && player.mediumHole.productionPerHole < 1.5){
+			player.mediumHole.cost = new Decimal('1.5e5');
+		}else if(player.mediumHole.productionPerHole >= 1.5 && player.mediumHole.productionPerHole < 2){
+			player.mediumHole.cost = new Decimal('1.5e5');
+		}
+		
+		calculateHolesProduction();
+	}
+}
+
+//upgrade to mediumHole
+function upgradeSmallHole(){
+	player.smallHole.upgraded = true;
+	document.getElementById("mediumHoleRow").classList.remove("displayNone");
+	document.getElementById("upgradeSmallHole").disabled = true;
+	
+	player.time = new Decimal(0)
+	
+	player.smallHole.amount = new Decimal(0);
+	player.smallHole.production = new Decimal(0);
+	player.smallHole.productionPerHole = new Decimal(1);
+	player.smallHole.cost = new Decimal('5e4');
+	
+	player.mediumHole.amount = player.mediumHole.amount.add(1);
+	player.mediumHole.productionPerHole = player.mediumHole.productionPerHole.add(player.mediumHole.productionIncrement);
+	
+	increaseHoles();
+	calculateHolesProduction();
+	loadTexts();
+}
+
+//Disables buttons
+function checkHoleUpgradesBought() {
+	var allowedSmallUpgrade = false;
+	
+	if(player.mediumHole.upgradesBought >= 10 && player.smallHole.upgradesBought <= 50 ||
+			player.mediumHole.upgradesBought >= 20 && player.smallHole.upgradesBought <= 51 ||
+			player.mediumHole.upgradesBought >= 30 && player.smallHole.upgradesBought <= 52 ||
+			player.mediumHole.upgradesBought >= 40 && player.smallHole.upgradesBought <= 54 ||
+			player.mediumHole.upgradesBought >= 50 && player.smallHole.upgradesBought <= 55){
+		allowedSmallUpgrade = true;
+	}else{
+		allowedSmallUpgrade = false;
+	}
+	
+	if(player.smallHole.upgraded == false){
+		if(player.smallHole.cost.lte(player.time)){
+			document.getElementById("increaseHoleSmall").disabled = false;
+			document.getElementById("increaseHoleSmall").classList.add("upgradeButtonHover");
+		}else{
+			document.getElementById("increaseHoleSmall").disabled = true;
+			document.getElementById("increaseHoleSmall").classList.remove("upgradeButtonHover");
+		}
+	}else{
+		if(player.smallHole.cost.lte(player.time) && allowedSmallUpgrade){
+			document.getElementById("increaseHoleSmall").disabled = false;
+			document.getElementById("increaseHoleSmall").classList.add("upgradeButtonHover");
+		}else{
+			document.getElementById("increaseHoleSmall").disabled = true;
+			document.getElementById("increaseHoleSmall").classList.remove("upgradeButtonHover");
+		}
 	}
 }
 
@@ -81,27 +188,36 @@ function loadInitialView() {
 	var smallHoleAmount = document.getElementById("smallHoleAmount");
 	var smallHoleProduction = document.getElementById("smallHoleProduction");
 	
-	startScreen.style.display = "none";
-	mainScreen.style.display = "block";
-	smallHoleCost.textContent = player.smallHole.cost;
-	smallHoleAmount.textContent = player.smallHole.amount;
-	smallHoleProduction.textContent = player.smallHole.production;
-}
-
-//load text from Textbox
-function loadTexts() {
-	
-	document.getElementById("smallHoleCost").textContent = player.smallHole.cost;
-	document.getElementById("smallHoleAmount").textContent = player.smallHole.amount;
-	document.getElementById("smallHoleProduction").textContent = player.smallHole.production;
-	
-	if(player.totalProduction != 1){
-		document.getElementById("singularOrPluralSpan").textContent = "Planck time units are filtering to your universe each second!";
-	}else{
-		document.getElementById("singularOrPluralSpan").textContent = "Planck time unit is filtering to your universe each second!";
+	if(player.smallHole.upgraded == true){
+		document.getElementById("mediumHoleRow").classList.remove("displayNone");
 	}
 	
-	document.getElementById("planckProduction").textContent = player.totalProduction;
+	startScreen.style.display = "none";
+	mainScreen.style.display = "block";
+	smallHoleCost.textContent = player.smallHole.cost + " (tP)";
+	smallHoleAmount.textContent = player.smallHole.amount.toFixed(1);
+	smallHoleProduction.textContent = player.smallHole.productionPerHole.toFixed(1) + " (tP)";
+}
+
+//load texts
+function loadTexts() {
+	document.getElementById("planckProduction").textContent = player.totalProduction.toFixed(1);
+	
+	document.getElementById("smallHoleCost").textContent = player.smallHole.cost + " (tP)";
+	document.getElementById("smallHoleAmount").textContent = player.smallHole.amount.toFixed(1);
+	document.getElementById("smallHoleProduction").textContent = player.smallHole.productionPerHole.toFixed(1) + " (tP)";
+	
+	document.getElementById("mediumHoleCost").textContent = player.mediumHole.cost + " (tP)";
+	document.getElementById("mediumHoleAmount").textContent = player.mediumHole.amount.toFixed(1);
+	document.getElementById("mediumHoleProduction").textContent = player.mediumHole.productionPerHole.toFixed(1) + " (sh)";
+	
+	if(player.totalProduction != 1){
+		document.getElementById("singularOrPluralSpan").textContent = "(tP) are filtering to your universe each second!";
+	}else{
+		document.getElementById("singularOrPluralSpan").textContent = "(tP) is filtering to your universe each second!";
+	}
+	
+	document.getElementById("planckProduction").textContent = player.totalProduction.toFixed(1);
 }
 
 function textBoxChangeTab(tab){
@@ -113,11 +229,6 @@ function textBoxChangeTab(tab){
 	textBoxAchievements.style.display = "none";
 	
 	tabToChange.style.display = "block";
-}
-
-//Calcula produccion total
-function calculateTotalProduction() {
-	player.totalProduction = player.smallHole.production;
 }
 
 //Save game
@@ -165,13 +276,26 @@ function loadGame() {
 		if (player.gameStarted === undefined) player.gameStarted = false;
 		if (player.time === undefined) player.time = new Decimal(10);
 		if (player.totalProduction === undefined) player.totalProduction = new Decimal(0);
+		
+		if (player.smallHole === undefined) player.smallHole = {};
 		if (player.smallHole.production === undefined) player.smallHole.production = new Decimal(0);
 		if (player.smallHole.productionIncrement === undefined) player.smallHole.productionIncrement = 1;
+		if (player.smallHole.productionPerHole === undefined) player.smallHole.productionPerHole = 1;
 		if (player.smallHole.amount === undefined) player.smallHole.amount = new Decimal(0);
 		if (player.smallHole.cost === undefined) player.smallHole.cost = new Decimal(10);
 		if (player.smallHole.initialCost === undefined) player.smallHole.initialCost = 10;
-		if (player.smallHole.upgradeCost === undefined) player.smallHole.upgradeCost = 0;
-		if (player.smallHole.costIncrement === undefined) player.smallHole.costIncrement = 25;
+		if (player.smallHole.upgradesBought === undefined) player.smallHole.upgradesBought = 0;
+		if (player.smallHole.upgraded === undefined) player.smallHole.upgraded = false;
+		
+		if (player.mediumHole === undefined) player.mediumHole = {};
+		if (player.mediumHole.production === undefined) player.mediumHole.production = new Decimal(0);
+		if (player.mediumHole.productionIncrement === undefined) player.mediumHole.productionIncrement = 1;
+		if (player.mediumHole.productionPerHole === undefined) player.mediumHole.productionPerHole = 1;
+		if (player.mediumHole.amount === undefined) player.mediumHole.amount = new Decimal(0);
+		if (player.mediumHole.cost === undefined) player.mediumHole.cost = new Decimal(10);
+		if (player.mediumHole.initialCost === undefined) player.mediumHole.initialCost = 10;
+		if (player.mediumHole.upgradesBought === undefined) player.mediumHole.upgradesBought = 0;
+		if (player.mediumHole.upgraded === undefined) player.mediumHole.upgraded = false;
 		
 		fromSaveToDecimal();
 	}
@@ -182,22 +306,37 @@ function fromSaveToDecimal() {
 	
 	player.time = new Decimal(player.time);
 	player.totalProduction = new Decimal(player.totalProduction);
+	
 	player.smallHole.production = new Decimal(player.smallHole.production);
 	player.smallHole.productionIncrement = new Decimal(player.smallHole.productionIncrement);
+	player.smallHole.productionPerHole = new Decimal(player.smallHole.productionPerHole);
 	player.smallHole.amount = new Decimal(player.smallHole.amount);
 	player.smallHole.cost = new Decimal(player.smallHole.cost);
-	player.smallHole.initialCost = player.smallHole.initialCost;
-	player.smallHole.upgradeCost = player.smallHole.upgradeCost;
-	player.smallHole.costIncrement = player.smallHole.costIncrement;
+	
+	player.mediumHole.production = new Decimal(player.mediumHole.production);
+	player.mediumHole.productionIncrement = new Decimal(player.mediumHole.productionIncrement);
+	player.mediumHole.productionPerHole = new Decimal(player.mediumHole.productionPerHole);
+	player.mediumHole.amount = new Decimal(player.mediumHole.amount);
+	player.mediumHole.cost = new Decimal(player.mediumHole.cost);
 	
 	loadTexts();
+}
+
+//increases holeProduction
+function increaseHoles() {
+	setInterval(function(){
+		player.smallHole.amount = player.smallHole.amount.add((player.mediumHole.production/10));
+		document.getElementById("smallHoleAmount").textContent = player.smallHole.amount.toFixed(1);
+		calculateHolesProduction();
+	}, 100);
 }
 
 //Increase Planck number setInterval
 function increasePlanckTime() {
 	setInterval(function(){
 		player.time = (player.time).add(player.totalProduction/10);
-		document.getElementById("planckAmount").textContent = (player.time).toFixed(1);
+		document.getElementById("planckAmount").textContent = player.time.toFixed(1);
+		checkHoleUpgradesBought();
 	}, 100);
 }
 
@@ -205,52 +344,92 @@ function increasePlanckTime() {
 function refreshTextbox() {
 	var htmlNewUniverse = false;
 	var htmlTimeFiltering = false;
-	var htmlUnitedForce = false;
+	var htmlGaugeForce = false;
 	var htmlControlOverHole = false;
 	var htmlGrandUnification = false;
 	var htmlSmallHoleGettingBigger = false;
+	var htmlSmallHoleUpgrade = false;
+	var htmlMediumHole = false;
+	var htmlBiggerSmallHoleFromMediumHole = false;
+	
+	var htmlGaugeForceSeparation = false;
 	
 	setInterval(function(){
-		if(!htmlNewUniverse){
+		if(player.smallHole.upgraded && !htmlNewUniverse || !htmlNewUniverse){
 			htmlTextbox = "<li><span class='padding10'>A new universe was born. There is a small hole in space-time.</span></li>";
 			textBoxGeneral.insertAdjacentHTML('afterbegin', htmlTextbox);
 			textBoxLog.insertAdjacentHTML('afterbegin', htmlTextbox);
 			htmlNewUniverse = true;
 		}
-		if(player.smallHole.amount.eq(1) && !htmlTimeFiltering){
-			htmlTextbox = "<li><span class='spanTextbox'>A small amount of time is coming to this universe through the ";
+		if(player.smallHole.upgraded && !htmlTimeFiltering || player.smallHole.amount.eq(1) && !htmlTimeFiltering){
+			htmlTextbox = "<li><span>A small amount of time is coming to this universe through the ";
 			htmlTextbox += "hole.</span></li>";
 			textBoxGeneral.insertAdjacentHTML('afterbegin', htmlTextbox);
 			textBoxLog.insertAdjacentHTML('afterbegin', htmlTextbox);
 			htmlTimeFiltering = true;
 		}
-		if(player.time.gte('1.5e1') && !htmlUnitedForce){
-			htmlTextbox = "<li><span class='spanTextbox'>Temperature and energies within the universe are so inconceivably ";
+		if(player.smallHole.upgraded && !htmlGaugeForce || player.time.gte('5e1') && !htmlGaugeForce){
+			htmlTextbox = "<li><span>Temperature and energies within the universe are so inconceivably ";
 			htmlTextbox += "high, that everyday subatomic particles can not form, and even the four fundamental forces that ";
-			htmlTextbox += "shape our universe are combined and form one fundamental force.</span></li>";
+			htmlTextbox += "shape our universe are combined and form one fundamental force, the gauge force.</span></li>";
 			textBoxGeneral.insertAdjacentHTML('afterbegin', htmlTextbox);
 			textBoxLog.insertAdjacentHTML('afterbegin', htmlTextbox);
-			htmlUnitedForce = true;
+			htmlGaugeForce = true;
 		}
-		if(player.smallHole.production.gte(10) && !htmlControlOverHole){
-			htmlTextbox = "<li><span class='spanTextbox'>Somehow you have control over the hole, ";
+		if(player.smallHole.upgraded && !htmlControlOverHole || player.smallHole.production.gte(10) && !htmlControlOverHole){
+			htmlTextbox = "<li><span>Somehow you have control over the hole, ";
 			htmlTextbox += "investing time on it makes it bigger, and increases the time coming through</span></li>"
 			textBoxGeneral.insertAdjacentHTML('afterbegin', htmlTextbox);
 			textBoxLog.insertAdjacentHTML('afterbegin', htmlTextbox);
 			htmlControlOverHole = true;
 		}
-		if(player.time.gte('2.5e2') && !htmlGrandUnification){
-			htmlTextbox = "<li><span class='spanTextbox'>The universe is slowly spanding which causes it to slowly cool ";
+		if(player.smallHole.upgraded && !htmlGrandUnification || player.time.gte('1e3') && !htmlGrandUnification){
+			htmlTextbox = "<li><span>The universe is slowly spanding which causes it to slowly cool ";
 			htmlTextbox += "down.</span></li>";
 			textBoxGeneral.insertAdjacentHTML('afterbegin', htmlTextbox);
 			textBoxLog.insertAdjacentHTML('afterbegin', htmlTextbox);
 			htmlGrandUnification = true;
 		}
-		if(player.smallHole.production.gte(25) && !htmlSmallHoleGettingBigger){
-			htmlTextbox = "<li><span class='spanTextbox'>More time is coming to this universe as the hole gets bigger.</span></li>";
+		if(player.smallHole.upgraded && !htmlSmallHoleGettingBigger ||
+				player.smallHole.production.gte(25) && !htmlSmallHoleGettingBigger){
+			htmlTextbox = "<li><span>More time is coming to this universe as the hole gets bigger.</span></li>";
 			textBoxGeneral.insertAdjacentHTML('afterbegin', htmlTextbox);
 			textBoxLog.insertAdjacentHTML('afterbegin', htmlTextbox);
 			htmlSmallHoleGettingBigger = true;
+		}
+		if(player.smallHole.upgraded && !htmlSmallHoleUpgrade || player.smallHole.production.gte(50) && !htmlSmallHoleUpgrade){
+			htmlTextbox = "<li><span>The hole has achieved a critical radius, you can increase it ";
+			htmlTextbox += "further, allowing you to produce small holes instead of time.<p><button id='upgradeSmallHole' ";
+			htmlTextbox += "class='upgradeTextBoxButton' onclick='upgradeSmallHole()'";
+			if(player.smallHole.upgraded == true){
+				htmlTextbox += " disabled";
+			}
+			htmlTextbox += ">Upgrade hole</button> Cost: ALL</p></span></li>";
+			textBoxGeneral.insertAdjacentHTML('afterbegin', htmlTextbox);
+			textBoxUpgrades.insertAdjacentHTML('afterbegin', htmlTextbox);
+			htmlSmallHoleUpgrade = true;
+		}
+		if(player.mediumHole.amount.gte(1) && !htmlMediumHole){
+			htmlTextbox = "<li><span>Your hole is now big enough to let small holes filter into the universe, each ";
+			htmlTextbox += "one letting time come through. However only the smallest holes can fit in at the moment.</span></li>";
+			textBoxGeneral.insertAdjacentHTML('afterbegin', htmlTextbox);
+			textBoxLog.insertAdjacentHTML('afterbegin', htmlTextbox);
+			textBoxUpgrades.insertAdjacentHTML('afterbegin', htmlTextbox);
+			htmlMediumHole = true;
+		}
+		if(player.mediumHole.upgradesBought >= 10 && !htmlBiggerSmallHoleFromMediumHole){
+			htmlTextbox = "<li><span>The hole is now big enough to allow small holes filtering to be bigger.</span></li>";
+			textBoxGeneral.insertAdjacentHTML('afterbegin', htmlTextbox);
+			textBoxLog.insertAdjacentHTML('afterbegin', htmlTextbox);
+			htmlBiggerSmallHoleFromMediumHole = true;
+		}
+		
+		
+		if(player.smallHole.upgraded && !htmlGaugeForceSeparation || player.time.gte('2e4') && !htmlGaugeForceSeparation){
+			htmlTextbox = "<li><span>htmlGaugeForceSeparation</span></li>";
+			textBoxGeneral.insertAdjacentHTML('afterbegin', htmlTextbox);
+			textBoxLog.insertAdjacentHTML('afterbegin', htmlTextbox);
+			htmlGaugeForceSeparation = true;
 		}
 	}, 1000);
 }
