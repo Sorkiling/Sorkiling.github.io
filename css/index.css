@@ -15,6 +15,9 @@ table{
 div.floatLeft{
 	float: left;
 }
+ul {
+    list-style-type: circle;
+}
 #loadingScreen{
 	margin: 15% 10px 10px 10px;
 	text-align: center;
