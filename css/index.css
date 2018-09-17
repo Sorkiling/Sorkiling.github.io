@@ -46,11 +46,23 @@ ul {
 #textBoxTabs{
 	border-bottom: 2px groove;
 }
+#gameTabs{
+	margin-top: 20px;
+}
 .logTextBox li{
 	padding: 10px 10px 0px 0px;
 }
 .resumeDiv{
 	 border-bottom: 2px groove;
+}
+.changeTabs{
+	background-color: #82ffff;
+	border-radius: 12px;
+	border: 2px solid;
+	width: 10%;
+}
+.selectedTab{
+	background-color: #527dfe;
 }
 .upgradeTextBoxButton{
 	background-color: #ff79bc;
@@ -60,6 +72,15 @@ ul {
 }
 .upgradeTextBoxButton:hover{
 	 background-color: #ff0482;
+}
+.upgradeTabButton{
+	background-color: #80ff80;
+	border-radius: 12px;
+	border: 2px solid;
+	width: 75%;
+}
+.upgradeTabButtonHover:hover{
+	 background-color: #00f200;
 }
 .upgradeButton{
 	background-color: #80ff80;
@@ -118,8 +139,11 @@ ul {
 .tab button.active {
     background-color: #ccc;
 }
-.upgradeTable{
+.mainHolesTable{
 	width: 55%;
+}
+.upgradesTable{
+	width: 100%;
 }
 .widthColumns{
 	width: 20%;

@@ -21,12 +21,6 @@
 	<div id="mainScreen">
 		<div class="resumeDiv">
 			<div class="padding4">
-				<button id="save" type="button">Save game</button>
-			</div>
-			<div class="padding4">
-				<button id="hardReset" type="button">Hard reset game</button>
-			</div>
-			<div class="padding4">
 				<p id="planckAmount" class="inlineBoldBig"></p>
 				<span>Planck time units (tP)</span>
 			</div>
@@ -38,8 +32,16 @@
 				<span id="singularOrPluralSpan">(tP) are filtering to your universe each second!</span>
 			</div>
 		</div>
-		<div>
-			<div class="floatLeft upgradeTable">
+		<div id="gameTabs">
+			<div>
+				<button id="tabmain" class="changeTabs selectedTab" onclick="changeTab('main')">Main</button>
+				<button id="tabupgrades" class="changeTabs" onclick="changeTab('upgrades')">Upgrades</button>
+				<button id="tabachievements" class="changeTabs" onclick="changeTab('achievements')">Achievements</button>
+				<button id="taboptions" class="changeTabs" onclick="changeTab('options')">Options</button>
+			</div>
+		</div>
+		<div id="mainTab">
+			<div class="floatLeft mainHolesTable">
 				<table>
 					<tr id="mainRows">
 						<th class="widthColumns"><p> </p></th>
@@ -50,24 +52,24 @@
 					</tr>
 					<tr id="smallHoleRow">
 						<th><button class="upgradeButton upgradeButtonHover" id="increaseHoleSmall" type="button">Increase size</button></th>
-						<th><span>Small Hole (sh)</span></th>
+						<th><p>Small Hole (sh)</p></th>
 						<th><p id="smallHoleCost"></p></th>
 						<th><p id="smallHoleProduction"></p></th>
 						<th><p id="smallHoleAmount"></p></th>
 					</tr>
 					<tr id="mediumHoleRow" class="displayNone">
 						<th><button class="upgradeButton upgradeButtonHover" id="increaseHoleMedium" type="button">Increase size</button></th>
-						<th><span>Medium Hole (mh)</span></th>
+						<th><p>Medium Hole (mh)</p></th>
 						<th><p id="mediumHoleCost"></p></th>
 						<th><p id="mediumHoleProduction"></p></th>
 						<th><p id="mediumHoleAmount"></p></th>
 					</tr>
-					<tr class="displayNone">
-						<th><button type="button">Make hole bigger</button></th>
-						<th><span>Increase hole size</span></th>
-						<th><p>0 </p></th>
-						<th><p>0 </p></th>
-						<th><p>0 </p></th>
+					<tr id="largeHoleRow" class="displayNone">
+						<th><button class="upgradeButton upgradeButtonHover" id="increaseHoleLarge" type="button">Increase size</button></th>
+						<th><p>Large Hole (lh)</p></th>
+						<th><p id="largeHoleCost"></p></th>
+						<th><p id="largeHoleProduction"></p></th>
+						<th><p id="largeHoleAmount"></p></th>
 					</tr>
 				</table>
 			</div>
@@ -85,7 +87,38 @@
 					<ul id="textBoxAchievements" class="logTextBox displayNone"></ul>
 				</div>
 			</div>
-		</div>	
+		</div>
+		<div id="upgradesTab">
+			<div class="floatLeft upgradesTable">
+				<table>
+					<tr>
+						<th class="widthColumns"><p>Upgrade: </p></th>
+						<th class="widthColumns"><p>Description: </p></th>
+						<th class="widthColumns"><p>Cost: </p></th>
+						<th class="widthColumns"><p>Amount: </p></th>
+						<th class="widthColumns"><p>Total upgraded: </p></th>
+					</tr>
+					<tr>
+						<th><button id="upgradeSmallHoleProduction" class="upgradeTabButton upgradeTabButtonHover" type="button">Small Hole</button></th>
+						<th><p>Increments the SmallHole production by 0.01/level</p></th>
+						<th><p id="productionUpgradeSmallHoleCost"></p></th>
+						<th><p id="productionUpgradeSmallHoleAmount"></p></th>
+						<th><p id="productionUpgradeSmallHoleTotal"></p></th>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="achievementsTab">
+		
+		</div>
+		<div id="optionsTab">
+			<div class="padding4">
+				<button id="save" type="button">Save game</button>
+			</div>
+			<div class="padding4">
+				<button id="hardReset" type="button">Hard reset game</button>
+			</div>
+		</div>
 		<footer>
 			<nav>
 				<!-- a href="enlace.html">Enlace</a -->
@@ -93,11 +126,13 @@
 		</footer>
 	</div>
 	
+	<script src="js/modernizr.js"></script>
 	<script src="js/notifications.js"></script>
 	<script src="js/breakInfinity.js"></script>
+	<script src="js/formattingNumbers.js"></script>
+	<script src="js/refreshTextbox.js"></script>
 	<script src="js/index.js"></script>
+	<script src="js/loadAndSave.js"></script>
 	
 </body>
-
-
 </html>
